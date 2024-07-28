@@ -64,6 +64,7 @@
   {
    "fieldname": "old_parent",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Old Parent",
    "options": "RM_Project"
   },
@@ -77,12 +78,14 @@
   {
    "fieldname": "id",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Id",
    "unique": 1
   },
   {
    "fieldname": "section_break_hdis",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Details"
   },
   {
    "fieldname": "project_name",
@@ -94,7 +97,7 @@
  "is_tree": 1,
  "is_virtual": 1,
  "links": [],
- "modified": "2024-07-27 21:49:01.176826",
+ "modified": "2024-07-28 06:22:44.804312",
  "modified_by": "Administrator",
  "module": "RM_Masters",
  "name": "RM_Project",

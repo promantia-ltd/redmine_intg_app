@@ -6,8 +6,16 @@ from frappe.model.document import Document
 from redminelib import Redmine
 
 
-def get_redmine_instance():
-    return Redmine('https://redmine.promantia.in', username='hari.madhavan@promantia.com', password='nopassword')
+redmine=Redmine('https://redmine.promantia.in', username='hari.madhavan@promantia.com', password='nopassword')
+
+def get_parent_projects() :
+	
+	projects = redmine.project.all().filter(status=1)
+	parent_dict={}
+	for p in projects:
+		if hasattr( p , 'parent' ):
+			parent_dict.update({ p.parent.id : p.parent.name})
+	return parent_dict
 
 class RM_Project(Document):
 	
@@ -15,13 +23,16 @@ class RM_Project(Document):
 		pass
 
 	def load_from_db(self):
-		redmine=get_redmine_instance()
+		parent_dict=get_parent_projects()		
 		project = redmine.project.get(self.name)
 		data = {
 			"name" : project.id,
 			"project_name" : project.name,
 			"identifier" : project.identifier,
-			"description" : project.description
+			"description" : project.description,
+			"is_group" : ( 1 if project.id in parent_dict else 0),
+			"parent_rm_project" : (project.parent.id if hasattr( project , 'parent' ) else None )
+		
 		}
 		super(Document, self).__init__(data)
 
@@ -32,22 +43,24 @@ class RM_Project(Document):
 	def get_list(args):
 		#redmine = Redmine('https://redmine.promantia.in', username='hari.madhavan@promantia.com', password='nopassword')
 
-		redmine=get_redmine_instance()
 		projects = redmine.project.all().filter(status=1)
-		return [frappe._dict({
+		parent_dict=get_parent_projects()		
+		project_dict=[frappe._dict({
 			"name" : p.id,
 			"project_name" : p.name,
+			"is_group" : ( 1 if p.id in parent_dict else 0),
+			"parent_rm_project" : (p.parent.id if hasattr( p , 'parent' ) else None ),
 			"identifier" : p.identifier,
 			"description" : p.description
-		}) for p in projects ]
+		}) for p in projects]
+		parent_dict={}
+		return project_dict 
 
 	@staticmethod
 	def get_count(args):
 		redmine = Redmine('https://redmine.promantia.in', username='hari.madhavan@promantia.com', password='nopassword')
 		#redmine=get_redmine_project()
-		return len(redmine.project.all().filter(status=0))
-
-
+		return len(redmine.project.all().filter(status=1))
 
 	@staticmethod
 	def get_stats(args):
