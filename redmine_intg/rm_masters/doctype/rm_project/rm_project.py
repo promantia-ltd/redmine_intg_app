@@ -13,9 +13,27 @@ def get_parent_projects() :
 	projects = redmine.project.all().filter(status=1)
 	parent_dict={}
 	for p in projects:
-		if hasattr( p , 'parent' ):
+		if hasattr( p , 'parent' ) :
 			parent_dict.update({ p.parent.id : p.parent.name})
 	return parent_dict
+
+@frappe.whitelist()
+def get_children(doctype, parent=None, is_root=False):
+	if is_root:
+		parent = ""
+	projects = redmine.project.all().filter(status=1)
+	parent_dict=get_parent_projects()		
+	for p in projects :
+		if ( not hasattr( p , 'parent' ) and ( parent == None ) ) or ( hasattr( p , 'parent' ) and ( parent == p,parent ) ) :
+			project_dict=[frappe._dict({
+				"project_name" : p.name,
+				"expandable" : ( 1 if p.id in parent_dict else 0) 
+		})] 
+	return project_dict 
+
+
+
+
 
 class RM_Project(Document):
 	
@@ -66,3 +84,4 @@ class RM_Project(Document):
 	def get_stats(args):
 		pass
 
+	
