@@ -17,7 +17,9 @@
   "old_parent",
   "parent_rm_project",
   "section_break_hdis",
-  "description"
+  "description",
+  "issues_tab",
+  "issues"
  ],
  "fields": [
   {
@@ -91,13 +93,23 @@
    "fieldname": "project_name",
    "fieldtype": "Data",
    "label": "Name"
+  },
+  {
+   "fieldname": "issues_tab",
+   "fieldtype": "Tab Break",
+   "label": "Issues"
+  },
+  {
+   "fieldname": "issues",
+   "fieldtype": "Table",
+   "options": "RM_Issue"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "is_virtual": 1,
  "links": [],
- "modified": "2024-07-28 06:22:44.804312",
+ "modified": "2024-08-04 12:57:54.526311",
  "modified_by": "Administrator",
  "module": "RM_Masters",
  "name": "RM_Project",

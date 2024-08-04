@@ -5,34 +5,50 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "summary_section",
+  "project",
+  "issue_title",
+  "column_break_shgu",
+  "redmine_id",
   "main_section",
   "issue_type",
+  "issue_number",
   "status",
-  "issue_title",
+  "done_ratio",
   "column_break_hzzy",
   "start_date",
-  "completion_date"
+  "completion_date",
+  "estimated_hours",
+  "spent_hours",
+  "section_break_szpr",
+  "descript",
+  "description"
  ],
  "fields": [
   {
    "fieldname": "main_section",
    "fieldtype": "Section Break",
-   "label": "Main"
+   "label": "Status"
   },
   {
    "fieldname": "issue_type",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Issue Type"
   },
   {
    "fieldname": "status",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Status"
   },
   {
+   "columns": 2,
    "fieldname": "issue_title",
    "fieldtype": "Data",
-   "label": "Issue Title"
+   "in_list_view": 1,
+   "label": "Issue Title",
+   "width": "0"
   },
   {
    "fieldname": "column_break_hzzy",
@@ -44,16 +60,75 @@
    "label": "Start Date"
   },
   {
+   "columns": 1,
    "fieldname": "completion_date",
    "fieldtype": "Date",
-   "label": "Completion Date"
+   "in_list_view": 1,
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "issue_number",
+   "fieldtype": "Data",
+   "label": "Issue Number"
+  },
+  {
+   "fieldname": "done_ratio",
+   "fieldtype": "Percent",
+   "label": "Done Ratio"
+  },
+  {
+   "columns": 1,
+   "fieldname": "estimated_hours",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Estimated Hours"
+  },
+  {
+   "fieldname": "section_break_szpr",
+   "fieldtype": "Section Break",
+   "label": "Description"
+  },
+  {
+   "fieldname": "descript",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Markdown Editor"
+  },
+  {
+   "columns": 1,
+   "fieldname": "spent_hours",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Spent Hours"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "project",
+   "options": "RM_Project"
+  },
+  {
+   "fieldname": "summary_section",
+   "fieldtype": "Section Break",
+   "label": "Summary"
+  },
+  {
+   "fieldname": "column_break_shgu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "redmine_id",
+   "fieldtype": "Data",
+   "label": "Redmine Id"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_virtual": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-28 13:12:56.654222",
+ "modified": "2024-08-04 15:51:10.638301",
  "modified_by": "Administrator",
  "module": "RM_Transactions",
  "name": "RM_Issue",

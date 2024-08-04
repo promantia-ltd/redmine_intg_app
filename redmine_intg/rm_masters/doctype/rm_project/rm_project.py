@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from  redmine_intg.rm_transactions.doctype.rm_issue.rm_issue import RM_Issue
 from redminelib import Redmine
 
 
@@ -23,12 +24,13 @@ def get_children(doctype, parent=None, is_root=False):
 		parent = ""
 	projects = redmine.project.all().filter(status=1)
 	parent_dict=get_parent_projects()		
+	project_dict=[]
 	for p in projects :
-		if ( not hasattr( p , 'parent' ) and ( parent == None ) ) or ( hasattr( p , 'parent' ) and ( parent == p,parent ) ) :
-			project_dict=[frappe._dict({
+		if (( not hasattr( p , 'parent' ) and ( parent == "" ) ) or ( hasattr( p , 'parent' ) and ( parent == p.parent ) )) :
+			project_dict.append(frappe._dict({
 				"project_name" : p.name,
-				"expandable" : ( 1 if p.id in parent_dict else 0) 
-		})] 
+				"expandable" : ( 1 if p.id in parent_dict else 0)
+				})) 
 	return project_dict 
 
 
@@ -49,7 +51,8 @@ class RM_Project(Document):
 			"identifier" : project.identifier,
 			"description" : project.description,
 			"is_group" : ( 1 if project.id in parent_dict else 0),
-			"parent_rm_project" : (project.parent.id if hasattr( project , 'parent' ) else None )
+			"parent_rm_project" : (project.parent.id if hasattr( project , 'parent' ) else None ),
+			"issues":  RM_Issue.load_children(project.issues)
 		
 		}
 		super(Document, self).__init__(data)
@@ -71,7 +74,6 @@ class RM_Project(Document):
 			"identifier" : p.identifier,
 			"description" : p.description
 		}) for p in projects]
-		parent_dict={}
 		return project_dict 
 
 	@staticmethod
