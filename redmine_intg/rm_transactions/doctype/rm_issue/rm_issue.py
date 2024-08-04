@@ -23,7 +23,11 @@ class RM_Issue(Document):
 	@staticmethod
 	def load_children (args):
 		issue_dict=[] 
+		spent_hours=0
 		for issue in args :
+			spent_hours = 0
+			for te in issue.time_entries :
+				spent_hours=spent_hours+te.hours
 			issue_dict.append({
 				"redmine_id" : issue.id,
 				"issue_type" : issue.tracker.name,
@@ -34,8 +38,8 @@ class RM_Issue(Document):
 				"project" : issue.project.id,
 				"due_date" : issue.due_date,
 				"done_ratio" : issue.done_ratio,
-				"estimated_hours": issue.estiated_hours,
-				"spent_hours": issue.spent_hours if hasattr ( issue , 'spent_hours') else 0 )
+				"estimated_hours": issue.estimated_hours,
+				"spent_hours": spent_hours
 
 			})   
 		return issue_dict 

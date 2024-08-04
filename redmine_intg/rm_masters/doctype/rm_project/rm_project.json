@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "field:id",
  "creation": "2024-07-27 12:45:27.494270",
  "doctype": "DocType",
@@ -102,14 +101,15 @@
   {
    "fieldname": "issues",
    "fieldtype": "Table",
-   "options": "RM_Issue"
+   "options": "RM_Issue",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "is_virtual": 1,
  "links": [],
- "modified": "2024-08-04 12:57:54.526311",
+ "modified": "2024-08-04 17:54:49.390216",
  "modified_by": "Administrator",
  "module": "RM_Masters",
  "name": "RM_Project",
@@ -118,19 +118,17 @@
  "owner": "Administrator",
  "permissions": [
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "System Manager",
-   "share": 1,
-   "write": 1
+   "share": 1
   }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "project_name"
 }
